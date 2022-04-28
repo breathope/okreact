@@ -5,10 +5,12 @@ import axios from 'axios'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [list, setList] = useState([]);
 
   async function getData() {
     const res = await axios.get('https://restapi.okdevtest.net/people');
-    console.log(res.data);
+    console.log(res.data._embedded.people);
+    setList(res.data._embedded.people);
   }
 
   useEffect( () => {
@@ -25,6 +27,11 @@ function App() {
             count is: {count}
           </button>
         </p>
+        <ul>
+          {list.map( (item, index) => (
+            <li key={index}>{item.firstName}</li>
+          ))}
+        </ul>
         <p>
           Edit <code>App.jsx</code> and save to test HMR updates.
         </p>
